@@ -68,12 +68,18 @@ class CashOnDelivery extends PaymentModule
 		global $smarty;
 
 		// Check if cart has product download
-		foreach ($params['cart']->getProducts() AS $product)
+		$i = 0;
+		$products = $params['cart']->getProducts();
+		$total = count($products);
+		foreach ($products as $key => $product)
 		{
 			$pd = ProductDownload::getIdFromIdProduct((int)($product['id_product']));
 			if ($pd AND Validate::isUnsignedInt($pd))
-				return false;
+				$i++;
 		}
+
+		if ($i && $total == $i)
+			return false;		
 
 		$smarty->assign(array(
 			'this_path' => $this->_path, //keep for retro compat
