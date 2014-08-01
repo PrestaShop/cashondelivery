@@ -23,7 +23,10 @@
 *  International Registered Trademark & Property of PrestaShop SA
 *}
 
-{capture name=path}{l s='Shipping' mod='cashondelivery'}{/capture}
+{capture name=path}
+	<a href="{$link->getPageLink('order', true, NULL, "step=3")|escape:'html':'UTF-8'}" rel="nofollow" title="{l s='Go back to the Checkout' mod='cashondelivery'}">{l s='Checkout' mod='cashondelivery'}</a><span class="navigation-pipe">{$navigationPipe}</span>{l s='Cash on delivery (COD) payment' mod='cashondelivery'}
+{/capture}
+
 {include file="$tpl_dir./breadcrumb.tpl"}
 
 <h2>{l s='Order summary' mod='cashondelivery'}</h2>
@@ -48,7 +51,7 @@
 	<p>
 		<br /><br />
 		<br /><br />
-		<b>{l s='Please confirm your order by clicking \'I confirm my order\'.' mod='cashondelivery'}.</b>
+		<b>{l s='Please confirm your order by clicking \'I confirm my order\'.' mod='cashondelivery'}</b>
 	</p>
 	<p class="cart_navigation" id="cart_navigation">
 		<a href="{$link->getPageLink('order', true)}?step=3" class="button_large">{l s='Other payment methods' mod='cashondelivery'}</a>
