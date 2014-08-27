@@ -34,6 +34,11 @@
 {assign var='current_step' value='payment'}
 {include file="$tpl_dir./order-steps.tpl"}
 
+{if $nbProducts <= 0}
+	<p class="alert alert-warning">
+        {l s='Your shopping cart is empty.' mod='cashondelivery'}
+    </p>
+{else}
 <h3>{l s='Cash on delivery (COD) payment' mod='cashondelivery'}</h3>
 
 <form action="{$link->getModuleLink('cashondelivery', 'validation', [], true)|escape:'html'}" method="post">
@@ -58,3 +63,4 @@
 		<input type="submit" value="{l s='I confirm my order' mod='cashondelivery'}" class="exclusive_large" />
 	</p>
 </form>
+{/if}
