@@ -69,6 +69,7 @@ class CashondeliveryValidationModuleFrontController extends ModuleFrontControlle
 		parent::initContent();
 
 		$this->context->smarty->assign(array(
+			'nbProducts' => $this->context->cart->nbProducts(),
 			'total' => $this->context->cart->getOrderTotal(true, Cart::BOTH),
 			'this_path' => $this->module->getPathUri(),//keep for retro compat
 			'this_path_cod' => $this->module->getPathUri(),
