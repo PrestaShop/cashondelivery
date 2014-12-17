@@ -37,6 +37,7 @@ class CashOnDelivery extends PaymentModule
 		$this->author = 'PrestaShop';
 		$this->need_instance = 1;
 		$this->controllers = array('validation');
+		$this->is_eu_compatible = 1;
 		
 		$this->currencies = false;
 
@@ -55,7 +56,7 @@ class CashOnDelivery extends PaymentModule
 
 	public function install()
 	{
-		if (!parent::install() OR !$this->registerHook('payment') OR !$this->registerHook('paymentReturn'))
+		if (!parent::install() OR !$this->registerHook('payment') OR ! $this->registerHook('displayPaymentEU') OR !$this->registerHook('paymentReturn'))
 			return false;
 		return true;
 	}
@@ -87,6 +88,28 @@ class CashOnDelivery extends PaymentModule
 			'this_path_ssl' => Tools::getShopDomainSsl(true, true).__PS_BASE_URI__.'modules/'.$this->name.'/'
 		));
 		return $this->display(__FILE__, 'payment.tpl');
+	}
+	
+	public function hookDisplayPaymentEU($params)
+	{
+		if (!$this->active)
+			return ;
+
+		global $smarty;
+
+		// Check if cart has product download
+		foreach ($params['cart']->getProducts() AS $product)
+		{
+			$pd = ProductDownload::getIdFromIdProduct((int)($product['id_product']));
+			if ($pd AND Validate::isUnsignedInt($pd))
+				return false;
+		}
+		
+		return array(
+			'cta_text' => $this->l('Pay with cash on delivery (COD)'),
+			'logo' => Media::getMediaPath(dirname(__FILE__).'/cashondelivery.png'),
+			'action' => $this->context->link->getModuleLink($this->name, 'validation', array('confirm' => true))
+		);
 	}
 	
 	public function hookPaymentReturn($params)
