@@ -61,6 +61,17 @@ class CashOnDelivery extends PaymentModule
 		return true;
 	}
 
+	public function hasProductDownload($cart)
+	{
+		foreach ($cart->getProducts() AS $product)
+		{
+			$pd = ProductDownload::getIdFromIdProduct((int)($product['id_product']));
+			if ($pd AND Validate::isUnsignedInt($pd))
+				return true;
+		}
+		return false;
+	}
+
 	public function hookPayment($params)
 	{
 		if (!$this->active)
@@ -69,18 +80,9 @@ class CashOnDelivery extends PaymentModule
 		global $smarty;
 
 		// Check if cart has product download
-		$i = 0;
-		$products = $params['cart']->getProducts();
-		$total = count($products);
-		foreach ($products as $key => $product)
-		{
-			$pd = ProductDownload::getIdFromIdProduct((int)($product['id_product']));
-			if ($pd AND Validate::isUnsignedInt($pd))
-				$i++;
-		}
+		if ($this->hasProductDownload($params['cart']))
+			return false;
 
-		if ($i && $total == $i)
-			return false;		
 
 		$smarty->assign(array(
 			'this_path' => $this->_path, //keep for retro compat
@@ -95,15 +97,9 @@ class CashOnDelivery extends PaymentModule
 		if (!$this->active)
 			return ;
 
-		global $smarty;
-
 		// Check if cart has product download
-		foreach ($params['cart']->getProducts() AS $product)
-		{
-			$pd = ProductDownload::getIdFromIdProduct((int)($product['id_product']));
-			if ($pd AND Validate::isUnsignedInt($pd))
-				return false;
-		}
+		if ($this->hasProductDownload($params['cart']))
+			return false;
 		
 		return array(
 			'cta_text' => $this->l('Pay with cash on delivery (COD)'),
