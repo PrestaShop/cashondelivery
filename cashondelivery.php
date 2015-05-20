@@ -104,7 +104,7 @@ class CashOnDelivery extends PaymentModule
 		return array(
 			'cta_text' => $this->l('Pay with cash on delivery (COD)'),
 			'logo' => Media::getMediaPath(dirname(__FILE__).'/cashondelivery.png'),
-			'action' => $this->context->link->getModuleLink($this->name, 'validation', array('confirm' => true))
+			'action' => $this->context->link->getModuleLink($this->name, 'validation', array('confirm' => true), true)
 		);
 	}
 	
