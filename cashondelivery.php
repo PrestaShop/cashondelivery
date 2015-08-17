@@ -28,7 +28,7 @@ if (!defined('_PS_VERSION_'))
 	exit;
 
 class CashOnDelivery extends PaymentModule
-{	
+{
 	public function __construct()
 	{
 		$this->name = 'cashondelivery';
@@ -38,7 +38,7 @@ class CashOnDelivery extends PaymentModule
 		$this->need_instance = 1;
 		$this->controllers = array('validation');
 		$this->is_eu_compatible = 1;
-		
+
 		$this->currencies = false;
 
 		parent::__construct();
@@ -91,7 +91,7 @@ class CashOnDelivery extends PaymentModule
 		));
 		return $this->display(__FILE__, 'payment.tpl');
 	}
-	
+
 	public function hookDisplayPaymentEU($params)
 	{
 		if (!$this->active)
@@ -100,14 +100,14 @@ class CashOnDelivery extends PaymentModule
 		// Check if cart has product download
 		if ($this->hasProductDownload($params['cart']))
 			return false;
-		
+
 		return array(
 			'cta_text' => $this->l('Pay with cash on delivery (COD)'),
 			'logo' => Media::getMediaPath(dirname(__FILE__).'/cashondelivery.png'),
-			'action' => $this->context->link->getModuleLink($this->name, 'validation', array('confirm' => true))
+			'action' => $this->context->link->getModuleLink($this->name, 'validation', array('confirm' => true), true)
 		);
 	}
-	
+
 	public function hookPaymentReturn($params)
 	{
 		if (!$this->active)
