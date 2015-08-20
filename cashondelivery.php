@@ -33,7 +33,7 @@ class CashOnDelivery extends PaymentModule
 	{
 		$this->name = 'cashondelivery';
 		$this->tab = 'payments_gateways';
-		$this->version = '0.7.4';
+		$this->version = '0.7.5';
 		$this->author = 'PrestaShop';
 		$this->need_instance = 1;
 		$this->controllers = array('validation');
