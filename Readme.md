@@ -1,8 +1,7 @@
 # Cash on delivery (COD)
 
 ## About
-
-Accept cash on delivery payments
+Accept cash payments on delivery to make it easy for customers to purchase on your store.
 
 ## Contributing
 
