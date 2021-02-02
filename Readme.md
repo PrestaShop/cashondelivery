@@ -1,5 +1,7 @@
 # Cash on delivery (COD)
 
+**This module has been archived, it’s no longer maintained but you still can fork it if you need it for your shop.**
+
 ## About
 Accept cash payments on delivery to make it easy for customers to purchase on your store.
 
