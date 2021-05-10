@@ -24,7 +24,7 @@
 *}
 
 {capture name=path}
-	<a href="{$link->getPageLink('order', true, NULL, "step=3")|escape:'html':'UTF-8'}" rel="nofollow" title="{l s='Go back to the Checkout' mod='cashondelivery'}">{l s='Checkout' mod='cashondelivery'}</a><span class="navigation-pipe">{$navigationPipe}</span>{l s='Cash on delivery (COD) payment' mod='cashondelivery'}
+	<a href="{$link->getPageLink('order', true, NULL, "step=3")|escape:'html':'UTF-8'}" title="{l s='Go back to the Checkout' mod='cashondelivery'}">{l s='Checkout' mod='cashondelivery'}</a><span class="navigation-pipe">{$navigationPipe}</span>{l s='Cash on delivery (COD) payment' mod='cashondelivery'}
 {/capture}
 
 {include file="$tpl_dir./breadcrumb.tpl"}
@@ -34,6 +34,11 @@
 {assign var='current_step' value='payment'}
 {include file="$tpl_dir./order-steps.tpl"}
 
+{if $nbProducts <= 0}
+	<p class="alert alert-warning">
+        {l s='Your shopping cart is empty.' mod='cashondelivery'}
+    </p>
+{else}
 <h3>{l s='Cash on delivery (COD) payment' mod='cashondelivery'}</h3>
 
 <form action="{$link->getModuleLink('cashondelivery', 'validation', [], true)|escape:'html'}" method="post">
@@ -58,3 +63,4 @@
 		<input type="submit" value="{l s='I confirm my order' mod='cashondelivery'}" class="exclusive_large" />
 	</p>
 </form>
+{/if}

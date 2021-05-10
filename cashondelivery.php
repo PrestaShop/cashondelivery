@@ -113,6 +113,15 @@ class CashOnDelivery extends PaymentModule
 		if (!$this->active)
 			return ;
 
+		$this->smarty->assign(array(
+			'total_to_pay' => Tools::displayPrice($params['total_to_pay'], $params['currencyObj'], false),
+			'id_order' => $params['objOrder']->id,
+			'this_path' => $this->_path,
+			'this_path_ssl' => Tools::getShopDomainSsl(true, true).__PS_BASE_URI__.'modules/'.$this->name.'/'
+		));
+			if (isset($params['objOrder']->reference) && !empty($params['objOrder']->reference))
+				$this->smarty->assign('reference', $params['objOrder']->reference);
+		
 		return $this->display(__FILE__, 'confirmation.tpl');
 	}
 }
